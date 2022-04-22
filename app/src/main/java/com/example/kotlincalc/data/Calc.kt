@@ -1,8 +1,12 @@
 package com.example.kotlincalc.data
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.example.kotlincalc.enums.Buttons
 
-class Calc {
+class Calc() :Parcelable {
+
+
     var cuttentString: String = "0"
         private set
     private var arg2: Double = 0.0
@@ -10,6 +14,20 @@ class Calc {
     private var activeAction: Buttons = Buttons.NOTHING
     private var isNeedToCleanArgs: Boolean = false
 
+    constructor(parcel: Parcel) : this() {
+        arg2 = parcel.readDouble()
+        arg1 = parcel.readDouble()
+        isNeedToCleanArgs = parcel.readByte() != 0.toByte()
+    }
+
+
+    fun restoreCalc(calc:Calc){
+        arg1 = calc.arg1
+        arg2 = calc.arg2
+        arg1 = calc.arg1
+        isNeedToCleanArgs = calc.isNeedToCleanArgs
+        activeAction = calc.activeAction
+    }
 
     fun getArg2() = arg2
     fun getAction(): String = when (activeAction) {
@@ -94,6 +112,26 @@ class Calc {
             return
         } else cuttentString += "."
 
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeDouble(arg2)
+        parcel.writeDouble(arg1)
+        parcel.writeByte(if (isNeedToCleanArgs) 1 else 0)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Calc> {
+        override fun createFromParcel(parcel: Parcel): Calc {
+            return Calc(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Calc?> {
+            return arrayOfNulls(size)
+        }
     }
 
 

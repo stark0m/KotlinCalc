@@ -2,39 +2,56 @@ package com.example.kotlincalc
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PersistableBundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
+import com.example.kotlincalc.data.Calc
 import com.example.kotlincalc.enums.Buttons
 import com.example.kotlincalc.interfaces.ViewInterface
 import java.text.DecimalFormat
 
-class MainActivity : AppCompatActivity(),ViewInterface {
+const val CALC = "CALC"
 
-    lateinit var button_0:Button
-    lateinit var button_1:Button
-    lateinit var button_2:Button
-    lateinit var button_3:Button
-    lateinit var button_4:Button
-    lateinit var button_5:Button
-    lateinit var button_6:Button
-    lateinit var button_7:Button
-    lateinit var button_8:Button
-    lateinit var button_9:Button
-    lateinit var button_mult:Button
-    lateinit var button_div:Button
-    lateinit var button_add:Button
-    lateinit var button_minus:Button
-    lateinit var button_result:Button
-    lateinit var button_dot:Button
-    lateinit var button_clear:Button
+class MainActivity : AppCompatActivity(), ViewInterface {
 
-    lateinit var text_active:TextView
-    lateinit var text_intermediate:TextView
-    lateinit var text_action:TextView
+    lateinit var button_0: Button
+    lateinit var button_1: Button
+    lateinit var button_2: Button
+    lateinit var button_3: Button
+    lateinit var button_4: Button
+    lateinit var button_5: Button
+    lateinit var button_6: Button
+    lateinit var button_7: Button
+    lateinit var button_8: Button
+    lateinit var button_9: Button
+    lateinit var button_mult: Button
+    lateinit var button_div: Button
+    lateinit var button_add: Button
+    lateinit var button_minus: Button
+    lateinit var button_result: Button
+    lateinit var button_dot: Button
+    lateinit var button_clear: Button
+
+    lateinit var text_active: TextView
+    lateinit var text_intermediate: TextView
+    lateinit var text_action: TextView
 
     private var nf = DecimalFormat("#.#####");
 
     val presenter = CalcPresenterImpl(this)
+
+
+
+
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putParcelable(CALC, presenter.calculator)
+        Toast.makeText(this, "SAVED", Toast.LENGTH_SHORT).show()
+        Log.i("AAAA", "SAVED STATE")
+        super.onSaveInstanceState(outState)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,36 +78,43 @@ class MainActivity : AppCompatActivity(),ViewInterface {
         text_action = findViewById(R.id.intermediate_action_value)
         button_clear = findViewById(R.id.key_clear)
 
-        button_0.setOnClickListener({presenter.switched(Buttons.ZERO)})
-        button_1.setOnClickListener({presenter.switched(Buttons.ONE)})
-        button_2.setOnClickListener({presenter.switched(Buttons.TWO)})
-        button_3.setOnClickListener({presenter.switched(Buttons.THREE)})
-        button_4.setOnClickListener({presenter.switched(Buttons.FOUR)})
-        button_5.setOnClickListener({presenter.switched(Buttons.FIVE)})
-        button_6.setOnClickListener({presenter.switched(Buttons.SIX)})
-        button_7.setOnClickListener({presenter.switched(Buttons.SEVEN)})
-        button_8.setOnClickListener({presenter.switched(Buttons.EIGHT)})
-        button_9.setOnClickListener({presenter.switched(Buttons.NINE)})
-        button_mult.setOnClickListener({presenter.switched(Buttons.MULT)})
-        button_div.setOnClickListener({presenter.switched(Buttons.DIV)})
-        button_add.setOnClickListener({presenter.switched(Buttons.ADD)})
-        button_minus.setOnClickListener({presenter.switched(Buttons.MINUS)})
-        button_result.setOnClickListener({presenter.switched(Buttons.RESULT)})
-        button_dot.setOnClickListener({presenter.switched(Buttons.DOT)})
-        button_clear.setOnClickListener({presenter.switched(Buttons.CLEAR)})
+        button_0.setOnClickListener({ presenter.switched(Buttons.ZERO) })
+        button_1.setOnClickListener({ presenter.switched(Buttons.ONE) })
+        button_2.setOnClickListener({ presenter.switched(Buttons.TWO) })
+        button_3.setOnClickListener({ presenter.switched(Buttons.THREE) })
+        button_4.setOnClickListener({ presenter.switched(Buttons.FOUR) })
+        button_5.setOnClickListener({ presenter.switched(Buttons.FIVE) })
+        button_6.setOnClickListener({ presenter.switched(Buttons.SIX) })
+        button_7.setOnClickListener({ presenter.switched(Buttons.SEVEN) })
+        button_8.setOnClickListener({ presenter.switched(Buttons.EIGHT) })
+        button_9.setOnClickListener({ presenter.switched(Buttons.NINE) })
+        button_mult.setOnClickListener({ presenter.switched(Buttons.MULT) })
+        button_div.setOnClickListener({ presenter.switched(Buttons.DIV) })
+        button_add.setOnClickListener({ presenter.switched(Buttons.ADD) })
+        button_minus.setOnClickListener({ presenter.switched(Buttons.MINUS) })
+        button_result.setOnClickListener({ presenter.switched(Buttons.RESULT) })
+        button_dot.setOnClickListener({ presenter.switched(Buttons.DOT) })
+        button_clear.setOnClickListener({ presenter.switched(Buttons.CLEAR) })
 
 
+        if (savedInstanceState != null) {
+            savedInstanceState.getParcelable<Calc>(CALC)
+                ?.let { presenter.calculator.restoreCalc(it) }
+        }
         presenter.showInView()
 
     }
 
     override fun drawCalc() {
-//        text_active?.text = presenter.calculator.cuttentString
+
         text_active?.text = nf.format(presenter.calculator.getArg1()).toString()
-//        text_active?.text = nf.format(presenter.calculator.getResults()).toString()
+
         text_action?.text = presenter.calculator.getAction()
-        text_intermediate.text =  nf.format(presenter.calculator.getArg2()).toString()
+        text_intermediate.text = nf.format(presenter.calculator.getArg2()).toString()
 
 
     }
+
+
+
 }
