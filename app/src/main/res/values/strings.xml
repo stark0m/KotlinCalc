@@ -1,3 +1,21 @@
 <resources>
-    <string name="app_name">KotlinCalc</string>
+    <string name="app_name">Education Calc</string>
+    <string name="key_one">1</string>
+    <string name="key_two">2</string>
+    <string name="key_three">3</string>
+    <string name="key_four">4</string>
+    <string name="key_plus">+</string>
+    <string name="key_minus">-</string>
+    <string name="key_six">6</string>
+    <string name="key_five">5</string>
+    <string name="key_seven">7</string>
+    <string name="key_eight">8</string>
+    <string name="key_nine">9</string>
+    <string name="key_zero">0</string>
+    <string name="key_multiply">*</string>
+    <string name="key_dot">.</string>
+    <string name="key_divide">/</string>
+    <string name="key_return">=</string>
+    <string name="calc_value">0</string>
+    <string name="key_clear">C</string>
 </resources>
