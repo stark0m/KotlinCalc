@@ -48,8 +48,6 @@ class MainActivity : AppCompatActivity(), ViewInterface {
 
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putParcelable(CALC, presenter.calculator)
-        Toast.makeText(this, "SAVED", Toast.LENGTH_SHORT).show()
-        Log.i("AAAA", "SAVED STATE")
         super.onSaveInstanceState(outState)
     }
 
