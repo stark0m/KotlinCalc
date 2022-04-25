@@ -4,7 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.example.kotlincalc.enums.Buttons
 
-class Calc() :Parcelable {
+class Calc() : Parcelable {
 
 
     var cuttentString: String = "0"
@@ -21,7 +21,7 @@ class Calc() :Parcelable {
     }
 
 
-    fun restoreCalc(calc:Calc){
+    fun restoreCalc(calc: Calc) {
         arg1 = calc.arg1
         arg2 = calc.arg2
         arg1 = calc.arg1

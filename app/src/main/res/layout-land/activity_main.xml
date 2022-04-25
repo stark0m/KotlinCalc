@@ -18,8 +18,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/calc_keyboard_grid_layout"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <TextView
@@ -49,9 +48,7 @@
         android:columnCount="5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-
-        >
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/key_one"
@@ -84,9 +81,9 @@
             android:layout_rowSpan="4"
             android:layout_gravity="fill"
             android:layout_marginStart="@dimen/margin_keyboard"
-
             android:text="@string/key_return"
             app:cornerRadius="@dimen/buttonCornerRadius" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/key_four"
             style="@style/ButtonAction.Number"
@@ -133,9 +130,7 @@
             android:id="@+id/key_multiply"
             style="@style/ButtonAction"
             android:text="@string/key_multiply"
-            app:cornerRadius="@dimen/buttonCornerRadius"
-
-            />
+            app:cornerRadius="@dimen/buttonCornerRadius" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/key_zero"
@@ -159,11 +154,8 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/key_divide"
             style="@style/ButtonAction"
-
-
             android:text="@string/key_divide"
             app:cornerRadius="@dimen/buttonCornerRadius" />
-
 
 
     </GridLayout>
