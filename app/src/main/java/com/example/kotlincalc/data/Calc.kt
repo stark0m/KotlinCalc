@@ -38,9 +38,6 @@ class Calc() : Parcelable {
         else -> ""
     }
 
-    fun isClicketResultAndBufferClear(action: Buttons) =
-        (activeAction == Buttons.NOTHING && action != Buttons.RESULT)
-
 
     fun doResult() {
         if (activeAction == Buttons.NOTHING) {
@@ -70,13 +67,9 @@ class Calc() : Parcelable {
             return
         }
 
-
         if (arg1 != 0.0) {
             arg2 = arg1
         }
-
-
-
 
         activeAction = actionClicked
         arg1 = 0.0
@@ -104,7 +97,6 @@ class Calc() : Parcelable {
             else -> ""
         }
         arg1 = cuttentString.toDouble()
-
     }
 
     fun dotClicked() {
