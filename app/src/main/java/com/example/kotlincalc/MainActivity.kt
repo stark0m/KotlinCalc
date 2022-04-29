@@ -1,5 +1,7 @@
 package com.example.kotlincalc
 
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
@@ -10,9 +12,13 @@ import android.widget.Toast
 import com.example.kotlincalc.data.Calc
 import com.example.kotlincalc.enums.Buttons
 import com.example.kotlincalc.interfaces.ViewInterface
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.appbar.MaterialToolbar
 import java.text.DecimalFormat
 
 const val CALC = "CALC"
+const val THEME_PREFS = "THEME_PREFS_FILE"
+const val CURRENT_THEME = "CURRENT_THEME"
 
 class MainActivity : AppCompatActivity(), ViewInterface {
 
@@ -38,11 +44,19 @@ class MainActivity : AppCompatActivity(), ViewInterface {
     lateinit var text_intermediate: TextView
     lateinit var text_action: TextView
 
+    lateinit var topAppBar: MaterialToolbar
+    lateinit var sharedPreferences:SharedPreferences
+
+
     private var nf = DecimalFormat("#.#####");
 
     val presenter = CalcPresenterImpl(this)
 
-
+    var currentTheme:Int
+        set(value) {
+            sharedPreferences.edit().putInt(CURRENT_THEME, value).apply()
+        }
+        get() = sharedPreferences.getInt(CURRENT_THEME, R.style.Theme_KotlinCalc_dark)
 
 
 
@@ -53,6 +67,8 @@ class MainActivity : AppCompatActivity(), ViewInterface {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        sharedPreferences = this.getSharedPreferences(THEME_PREFS, MODE_PRIVATE)
+        setTheme(currentTheme)
         setContentView(R.layout.activity_main)
 
         button_0 = findViewById(R.id.key_zero)
@@ -75,6 +91,7 @@ class MainActivity : AppCompatActivity(), ViewInterface {
         text_intermediate = findViewById(R.id.intermediate_value_number)
         text_action = findViewById(R.id.intermediate_action_value)
         button_clear = findViewById(R.id.key_clear)
+        topAppBar = findViewById(R.id.topAppBar)
 
         button_0.setOnClickListener({ presenter.switched(Buttons.ZERO) })
         button_1.setOnClickListener({ presenter.switched(Buttons.ONE) })
@@ -95,12 +112,35 @@ class MainActivity : AppCompatActivity(), ViewInterface {
         button_clear.setOnClickListener({ presenter.switched(Buttons.CLEAR) })
 
 
+
+
+        initListeners();
+
         if (savedInstanceState != null) {
             savedInstanceState.getParcelable<Calc>(CALC)
                 ?.let { presenter.calculator.restoreCalc(it) }
         }
         presenter.showInView()
 
+    }
+
+    private fun initListeners() {
+        topAppBar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.dark_theme -> {
+                    currentTheme = R.style.Theme_KotlinCalc_dark
+                    recreate()
+                    true
+                }
+                R.id.light_theme -> {
+                    currentTheme = R.style.Theme_KotlinCalc
+                    recreate()
+                    true
+                }
+
+                else -> false
+            }
+        }
     }
 
     override fun drawCalc() {
@@ -112,7 +152,6 @@ class MainActivity : AppCompatActivity(), ViewInterface {
 
 
     }
-
 
 
 }
