@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ButtonAction" parent="Widget.MaterialComponents.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:backgroundTint">@color/orange_calc</item>
+        <item name="android:layout_columnWeight">1</item>
+
+        <item name="android:layout_marginEnd">@dimen/margin_keyboard</item>
+
+        <item name="android:textSize">@dimen/calc_button_text_size</item>
+        <item name="cornerRadius">@dimen/buttonCornerRadius</item>
+
+    </style>
+
+    <style name="ButtonAction.Number">
+        <item name="android:layout_marginStart">@dimen/margin_keyboard</item>
+        <item name="android:backgroundTint">@color/calc_gray</item>
+    </style>
+</resources>
